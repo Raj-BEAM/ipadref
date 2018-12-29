@@ -1,0 +1,52 @@
+
+localtime:local_to_local(erlang:localtime(), "IST", "EST").
+
+
+application:ensure_all_started(cron).
+
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {23,4,13,2,'_', ["SGT", "EDT"]}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {34, 4, '_', '_', '_', ['_']}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {33, 4, '_', '_', '_', ["SGT", "EDT"]}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {37, 4, '_', '_', '_', ["SGT", "EST"]}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {42, 4,13, '_', '_', ["SGT", "EST"]}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {43, '_', [12,13], '_', '_', ["SGT", "EST"]}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {45, '_', '_', 2, '_', ['_']}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {"/2", '_', '_', 2, '_', ['_']}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {'_', '_', '_', 2, '_', ['_']}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {37, '_', 13, '_', '_', ["IST"]}).
+
+cron_server:add_job(greet1, {io, format, ["......Hello!"]}, {14, '_', '_', '_', '_', ["SGT", "EDT", "IST"]}).
+
+
+
+
+
+mnesia:info().
+
+cron_server:list_jobs().
+
+
+localtime:local_to_local({{2018,2,12},{19,12,0}}, "UTC", "EST").
+
+
+
+
+localtime:local_to_utc(erlang:localtime(), "IST").
+
+erlang:localtime_to_universaltime(calendar:datetime()).
+
+localtime:local_to_local({{2010, 10, 10}, {21, 56, 23}}, "Europe/Moscow", "Australia/Sydney").
+
+localtime:local_to_local(erlang:localtime(), "IST", "EST").
+
+UTCDateTime = erlang:localtime_to_universaltime(erlang:localtime()),

@@ -1,0 +1,17 @@
+sftp u1@vm1
+
+put /home/raj/it/dev/beam/erlang/practise/distributed/kvs/kvs.erl /home/u1/it/dev/beam/erlang/practise/distributed/kvs/
+
+erl -name eserver -setcookie abc
+
+erl -name eclient -setcookie abc
+
+net_adm:ping('eclient@vm1.rajbeam.net').
+
+nl(kvs).
+
+net_adm:ping('eserver@rajbeam.lappie.net').
+
+rpc:call('eserver@lappie.rajbeam.net', kvs, store, [weather,cold]).
+
+rpc:call('eserver@lappie.rajbeam.net', kvs, lookup, [weather]).

@@ -1,0 +1,27 @@
+erl -mnesia dir '"/tmp/mnesia_store"' -name lappie
+
+mnesia:create_schema([node()]).
+
+mnesia:start().
+
+mnesia:info().
+
+create_tables:insert_project(simple_cache, "a simple cache application").
+
+create_tables:insert_user(1,martin,[simple_cache]).
+
+mnesia:dirty_read(contributor, 1).
+
+
+mnesia:transaction(
+ fun() ->
+    mnesia:select(user, [{#user{id = '$1', name = martin}, [], ['$1']}])
+ end).
+
+
+ mnesia:transaction(
+ fun() ->
+    Table = mnesia:table(user),
+    QueryHandle = qlc:q([U#user.id || U <- Table, U#user.name =:= martin]),
+    qlc:eval(QueryHandle)
+ end).

@@ -1,0 +1,43 @@
+
+erl -sname enode1 -setcookie abc
+erl -sname enode2 -setcookie abc
+
+net_adm:ping('enode2@tara2').
+net_adm:ping('enode1@tara1').
+
+nodes().
+nodes().
+
+mnesia:create_schema(['enode1@tara1', 'enode2@tara2']).
+
+mnesia:start().
+mnesia:info().
+
+mnesia:start().
+mnesia:info().
+
+
+
+====================================================
+
+
+
+enode1
+-------
+c(create_dist_tables).
+create_dist_tables:init_tables().
+create_dist_tables:insert_project(simple_cache, "a simple cache application").
+create_dist_tables:insert_user(1,martin,[simple_cache]).
+mnesia:dirty_read(contributor, 1).
+
+enode 2
+--------
+mnesia:dirty_read(contributor, 1).
+mnesia:dirty_read(user, 1).
+mnesia:dirty_write({user, 2, joe}).
+
+
+enode 1
+--------
+mnesia:dirty_read(user, 2).
+----------------------------------------------------------
